@@ -2,7 +2,7 @@ FROM ubuntu:jammy
 
 RUN apt-get update \
  && apt-get install -y \
-    python3.10-minimal \
+    python3.11-minimal \
     python3-pip \
     wget \
     libpq-dev \
