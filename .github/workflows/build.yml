@@ -5,13 +5,15 @@ on:
 
 jobs:
   docker:
-    name: Docker Build + Push
+    name: Docker
     runs-on: ubuntu-latest
 
     strategy:
       fail-fast: false
       matrix:
         tag:
+          - 3.11-alpine
+          - 3.11-alpine-docworker
           - 3.11-jammy
           - 3.11-jammy-apt
 
@@ -54,6 +56,8 @@ jobs:
         push: false
         tags: ${{ steps.meta-test.outputs.tags }}
         labels: ${{ steps.meta-test.outputs.labels }}
+        cache-from: type=gha
+        cache-to: type=gha,mode=max
 
     # PUBLIC: DOCKER HUB
     - name: Docker login [public]

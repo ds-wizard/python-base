@@ -1,0 +1,24 @@
+FROM alpine:3.17.3
+
+ARG TARGETARCH
+
+# Python
+COPY ./scripts/alpine/clean /bin/clean
+
+ENV PIP_NO_COMPILE=1 \
+    PIP_DISABLE_PIP_VERSION_CHECK=1 \
+    PIP_CACHE_DIR=/pip-cache \
+    PIPENV_VENV_IN_PROJECT=1 \
+    TEMP=/tmp \
+    ENV=/etc/profile \
+    CLEAN="/var/cache/apk/:/tmp/" \
+    RAWEXEC="monit crond supervise sshd"
+
+RUN chmod +x /bin/clean \
+    && mkdir "$PIP_CACHE_DIR" && chmod a+rwx "$PIP_CACHE_DIR" \
+    && apk add python3 python3-dev libffi-dev libpq-dev openssl-dev \
+    && ln -s /usr/bin/pip3 /usr/bin/pip \
+    && python3 -m ensurepip --upgrade \
+    && pip install -U pip setuptools wheel \
+    && adduser -u 1000 -S -s /bin/sh -G users user && echo "user:password" | chpasswd 2>/dev/null \
+    && clean
