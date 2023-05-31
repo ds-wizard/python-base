@@ -12,7 +12,8 @@ ENV PIP_NO_COMPILE=1 \
     TEMP=/tmp \
     ENV=/etc/profile \
     CLEAN="/var/cache/apk/:/tmp/" \
-    RAWEXEC="monit crond supervise sshd"
+    RAWEXEC="monit crond supervise sshd" \
+    SSL_CERT_FILE=/etc/ssl/certs/ca-certificates.crt
 
 RUN chmod +x /bin/clean \
     && mkdir "$PIP_CACHE_DIR" && chmod a+rwx "$PIP_CACHE_DIR" \
