@@ -1,5 +1,5 @@
-FROM surnet/alpine-wkhtmltopdf:3.17.0-0.12.6-small as wkhtmltopdf
-FROM alpine:3.17.3
+FROM surnet/alpine-wkhtmltopdf:3.18.0-0.12.6-small as wkhtmltopdf
+FROM alpine:3.18.3
 
 ARG TARGETARCH
 
@@ -20,7 +20,7 @@ RUN chmod +x /bin/clean \
     && apk add -u python3 python3-dev libpq-dev libffi-dev openssl-dev gettext \
     && apk add -u cairo cairo-gobject pango gdk-pixbuf py3-brotli py3-lxml py3-cffi py3-pillow msttcorefonts-installer fontconfig zopfli \
     && apk add -u lua lua-dev lua-penlight zip \
-    && apk add -u libstdc++ libx11 libxrender libxext libssl1.1 ca-certificates dbus fontconfig freetype ttf-dejavu ttf-droid ttf-freefont ttf-liberation \
+    && apk add -u libstdc++ libx11 libxrender libxext libssl1.1 ca-certificates dbus fontconfig freetype ttf-dejavu ttf-droid ttf-freefont ttf-liberation font-noto-emoji \
     && dbus-uuidgen > /var/lib/dbus/machine-id && apk del dbus \
     && rm -rf /var/cache/apk/* /tmp/* \
     && wget -O /bin/wait-for https://raw.githubusercontent.com/eficode/wait-for/v2.2.3/wait-for && chmod a+x /bin/wait-for \
@@ -36,7 +36,7 @@ RUN chmod +x /bin/clean \
 ENV XDG_DATA_HOME=/ \
     LUA_PATH="/pandoc/filters/?.lua;;"
 
-RUN wget -O /tmp/pandoc.tar.gz "https://github.com/jgm/pandoc/releases/download/3.1.1/pandoc-3.1.1-linux-${TARGETARCH}.tar.gz" \
+RUN wget -O /tmp/pandoc.tar.gz "https://github.com/jgm/pandoc/releases/download/3.1.8/pandoc-3.1.8-linux-${TARGETARCH}.tar.gz" \
     && tar -xvzf /tmp/pandoc.tar.gz -C /tmp && mv /tmp/pandoc*/bin/pandoc /usr/local/bin/pandoc \
     && clean
 
@@ -68,5 +68,5 @@ RUN mkdir -p /pandoc/filters \
 COPY --from=wkhtmltopdf /bin/wkhtmltopdf /bin/wkhtmltopdf
 
 # WeasyPrint
-RUN pip install weasyprint==58.1 \
+RUN pip install weasyprint==59.0 \
     && clean
