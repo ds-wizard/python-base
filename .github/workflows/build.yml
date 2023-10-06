@@ -37,6 +37,10 @@ jobs:
       id: buildx
       uses: docker/setup-buildx-action@v2
 
+    - name: Set short SHA
+      id: vars
+      run: echo "sha_short=$(git rev-parse --short HEAD)" >> $GITHUB_OUTPUT
+
     # TEST DOCKER IMAGE BUILD
     - name: Docker meta [test]
       id: meta-test
@@ -46,6 +50,7 @@ jobs:
           ${{ env.PUBLIC_IMAGE_PREFIX }}/${{ env.IMAGE_BASE_NAME }}
         tags: |
           type=raw,value=${{ matrix.tag }}
+          type=raw,value=${{ matrix.tag }}-${{ steps.vars.outputs.sha_short }}
 
     - name: Docker build+push [test]
       uses: docker/build-push-action@v3
@@ -76,6 +81,7 @@ jobs:
           ${{ env.PUBLIC_IMAGE_PREFIX }}/${{ env.IMAGE_BASE_NAME }}
         tags: |
           type=raw,value=${{ matrix.tag }}
+          type=raw,value=${{ matrix.tag }}-${{ steps.vars.outputs.sha_short }}
 
     - name: Docker build+push [public]
       uses: docker/build-push-action@v3

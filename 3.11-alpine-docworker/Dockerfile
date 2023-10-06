@@ -1,5 +1,5 @@
 FROM surnet/alpine-wkhtmltopdf:3.18.0-0.12.6-small as wkhtmltopdf
-FROM alpine:3.18.3
+FROM alpine:3.18.4
 
 ARG TARGETARCH
 
@@ -68,5 +68,5 @@ RUN mkdir -p /pandoc/filters \
 COPY --from=wkhtmltopdf /bin/wkhtmltopdf /bin/wkhtmltopdf
 
 # WeasyPrint
-RUN pip install weasyprint==59.0 \
+RUN pip install weasyprint==60.1 \
     && clean
