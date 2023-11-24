@@ -21,5 +21,7 @@ RUN chmod +x /bin/clean \
     && ln -s /usr/bin/pip3 /usr/bin/pip \
     && python3 -m ensurepip --upgrade \
     && pip install -U pip setuptools wheel \
-    && adduser -u 1000 -S -s /bin/sh -G users user && echo "user:password" | chpasswd 2>/dev/null \
+    && addgroup -g 10001 user \
+    && adduser -u 10000 -S -s /bin/sh -G user user \
+    && echo "user:password" | chpasswd 2>/dev/null \
     && clean

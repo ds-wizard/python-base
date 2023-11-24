@@ -29,7 +29,9 @@ RUN chmod +x /bin/clean \
     && ln -s /usr/bin/pip3 /usr/bin/pip \
     && python3 -m ensurepip --upgrade \
     && pip install -U pip setuptools wheel \
-    && adduser -u 1000 -S -s /bin/sh -G users user && echo "user:password" | chpasswd 2>/dev/null \
+    && addgroup -g 10001 user \
+    && adduser -u 10000 -S -s /bin/sh -G user user \
+    && echo "user:password" | chpasswd 2>/dev/null \
     && clean
 
 # Pandoc
@@ -46,7 +48,7 @@ RUN mkdir -p /pandoc/templates \
     && wget -O /pandoc/templates/chmduquesne.tex https://raw.githubusercontent.com/mszep/pandoc_resume/master/styles/chmduquesne.tex \
     && wget -O /pandoc/templates/chmduquesne.css https://raw.githubusercontent.com/mszep/pandoc_resume/master/styles/chmduquesne.css \
     && wget -O /pandoc/templates/leaflet.latex https://gitlab.com/daamien/pandoc-leaflet-template/raw/1.0/leaflet.latex \
-    && chown -R user:users /pandoc \
+    && chown -R user:user /pandoc \
     && clean
 
 RUN mkdir -p /pandoc/filters \
@@ -61,7 +63,7 @@ RUN mkdir -p /pandoc/filters \
     && wget -O /tmp/pandoc-odt-filters.zip https://github.com/jzeneto/pandoc-odt-filters/archive/master.zip && unzip /tmp/pandoc-odt-filters.zip -d /tmp && cp -r /tmp/pandoc-odt-filters*/*.lua /pandoc/filters && clean \
     && wget -O /tmp/pandoc-filters.zip https://github.com/hason/pandoc-filters/archive/master.zip && unzip /tmp/pandoc-filters.zip -d /tmp && cd /tmp/pandoc-filters* && find . -name '*.lua' | cpio -pdm /pandoc/filters && clean \
     && wget -O /pandoc/filters/logging.lua https://raw.githubusercontent.com/wlupton/pandoc-lua-logging/main/logging.lua \
-    && chown -R user:users /pandoc \
+    && chown -R user:user /pandoc \
     && clean
 
 # WkHtmlToPdf
