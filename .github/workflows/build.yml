@@ -80,9 +80,9 @@ jobs:
         tags: |
           type=raw,value=${{ matrix.tag }},enable=${{ github.ref == format('refs/heads/{0}', 'main') }}
           type=raw,value=${{ matrix.tag }}-${{ steps.vars.outputs.sha_short }}
-          type=semver,pattern={{version}},suffix=${{ matrix.tag }}
-          type=semver,pattern={{major}}.{{minor}},suffix=${{ matrix.tag }}
-          type=semver,pattern={{major}},enable=${{ !startsWith(github.ref, 'refs/tags/v0.') }},suffix=${{ matrix.tag }}
+          type=semver,pattern={{version}},suffix=-${{ matrix.tag }}
+          type=semver,pattern={{major}}.{{minor}},suffix=-${{ matrix.tag }}
+          type=semver,pattern={{major}},enable=${{ !startsWith(github.ref, 'refs/tags/v0.') }},suffix=-${{ matrix.tag }}
 
     - name: Docker build+push [public]
       uses: docker/build-push-action@v3

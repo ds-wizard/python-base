@@ -1,4 +1,3 @@
-FROM surnet/alpine-wkhtmltopdf:3.18.0-0.12.6-small as wkhtmltopdf
 FROM alpine:3.18.4
 
 ARG TARGETARCH
@@ -38,7 +37,7 @@ RUN chmod +x /bin/clean \
 ENV XDG_DATA_HOME=/ \
     LUA_PATH="/pandoc/filters/?.lua;;"
 
-RUN wget -O /tmp/pandoc.tar.gz "https://github.com/jgm/pandoc/releases/download/3.1.8/pandoc-3.1.8-linux-${TARGETARCH}.tar.gz" \
+RUN wget -O /tmp/pandoc.tar.gz "https://github.com/jgm/pandoc/releases/download/3.1.9/pandoc-3.1.9-linux-${TARGETARCH}.tar.gz" \
     && tar -xvzf /tmp/pandoc.tar.gz -C /tmp && mv /tmp/pandoc*/bin/pandoc /usr/local/bin/pandoc \
     && clean
 
@@ -65,9 +64,6 @@ RUN mkdir -p /pandoc/filters \
     && wget -O /pandoc/filters/logging.lua https://raw.githubusercontent.com/wlupton/pandoc-lua-logging/main/logging.lua \
     && chown -R user:user /pandoc \
     && clean
-
-# WkHtmlToPdf
-COPY --from=wkhtmltopdf /bin/wkhtmltopdf /bin/wkhtmltopdf
 
 # WeasyPrint
 RUN pip install weasyprint==60.1 \
