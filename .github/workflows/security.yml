@@ -11,6 +11,12 @@ jobs:
     name: Grype
     runs-on: ubuntu-latest
 
+    services:
+      registry:
+        image: registry:2
+        ports:
+          - 5000:5000
+
     strategy:
       fail-fast: false
       matrix:
@@ -19,7 +25,7 @@ jobs:
           - 3.11-docworker
 
     env:
-      IMAGE_BASE_NAME: 'python-base'
+      IMAGE_BASE_NAME: 'localhost:5000/test/python-base'
       DOCKER_META_CONTEXT: '.'
       DOCKER_META_FILE: './${{ matrix.tag }}/Dockerfile'
       DOCKER_META_PLATFORMS: 'linux/amd64,linux/arm64'
@@ -44,6 +50,8 @@ jobs:
       - name: Set up Docker Buildx
         id: buildx
         uses: docker/setup-buildx-action@v2
+        with:
+          driver-opts: network=host
 
       # TEST DOCKER IMAGE BUILD
       - name: Docker meta [test]
@@ -61,7 +69,7 @@ jobs:
           context: ${{ env.DOCKER_META_CONTEXT }}
           file: ${{ env.DOCKER_META_FILE }}
           platforms: ${{ env.DOCKER_META_PLATFORMS }}
-          push: false
+          push: true
           tags: ${{ steps.meta-test.outputs.tags }}
           labels: ${{ steps.meta-test.outputs.labels }}
           cache-from: type=gha
