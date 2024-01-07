@@ -1,4 +1,4 @@
-FROM alpine:3.18.4
+FROM alpine:3.18.5
 
 ARG TARGETARCH
 
@@ -16,6 +16,7 @@ ENV PIP_NO_COMPILE=1 \
 
 RUN chmod +x /bin/clean \
     && mkdir "$PIP_CACHE_DIR" && chmod a+rwx "$PIP_CACHE_DIR" \
+    && apk add sqlite-libs --repository=https://dl-cdn.alpinelinux.org/alpine/edge/community \
     && apk add -u python3 python3-dev libpq-dev libffi-dev openssl-dev gettext \
     && apk add -u cairo cairo-gobject pango gdk-pixbuf py3-brotli py3-lxml py3-cffi py3-pillow msttcorefonts-installer fontconfig zopfli \
     && apk add -u lua lua-dev lua-penlight zip \

@@ -1,4 +1,4 @@
-FROM alpine:3.18.4
+FROM alpine:3.18.5
 
 ARG TARGETARCH
 
@@ -17,6 +17,7 @@ ENV PIP_NO_COMPILE=1 \
 
 RUN chmod +x /bin/clean \
     && mkdir "$PIP_CACHE_DIR" && chmod a+rwx "$PIP_CACHE_DIR" \
+    && apk add sqlite-libs --repository=https://dl-cdn.alpinelinux.org/alpine/edge/community \
     && apk add python3 python3-dev libffi-dev libpq-dev openssl-dev \
     && ln -s /usr/bin/pip3 /usr/bin/pip \
     && python3 -m ensurepip --upgrade \
