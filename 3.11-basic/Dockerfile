@@ -1,4 +1,4 @@
-FROM alpine:3.18.5
+FROM alpine:3.19.0
 
 ARG TARGETARCH
 
@@ -17,11 +17,8 @@ ENV PIP_NO_COMPILE=1 \
 
 RUN chmod +x /bin/clean \
     && mkdir "$PIP_CACHE_DIR" && chmod a+rwx "$PIP_CACHE_DIR" \
-    && apk add python3 python3-dev libffi-dev libpq-dev openssl-dev \
-    && apk add sqlite-libs --repository=https://dl-cdn.alpinelinux.org/alpine/edge/community \
-    && ln -s /usr/bin/pip3 /usr/bin/pip \
-    && python3 -m ensurepip --upgrade \
-    && pip install -U pip setuptools wheel \
+    && apk add python3 python3-dev py3-wheel py3-setuptools py3-pip libffi-dev libpq-dev openssl-dev \
+    && apk add -u openssl ca-certificates \
     && addgroup -g 10001 user \
     && adduser -u 10000 -S -s /bin/sh -G user user \
     && echo "user:password" | chpasswd 2>/dev/null \

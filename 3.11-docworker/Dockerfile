@@ -1,4 +1,4 @@
-FROM alpine:3.18.5
+FROM alpine:3.19.0
 
 ARG TARGETARCH
 
@@ -16,19 +16,16 @@ ENV PIP_NO_COMPILE=1 \
 
 RUN chmod +x /bin/clean \
     && mkdir "$PIP_CACHE_DIR" && chmod a+rwx "$PIP_CACHE_DIR" \
-    && apk add sqlite-libs --repository=https://dl-cdn.alpinelinux.org/alpine/edge/community \
-    && apk add -u python3 python3-dev libpq-dev libffi-dev openssl-dev gettext \
+    && apk add -u python3 python3-dev py3-wheel py3-setuptools py3-pip libpq-dev libffi-dev openssl-dev gettext \
     && apk add -u cairo cairo-gobject pango gdk-pixbuf py3-brotli py3-lxml py3-cffi py3-pillow msttcorefonts-installer fontconfig zopfli \
     && apk add -u lua lua-dev lua-penlight zip \
-    && apk add -u libstdc++ libx11 libxrender libxext libssl1.1 ca-certificates dbus fontconfig freetype ttf-dejavu ttf-droid ttf-freefont ttf-liberation font-noto-emoji \
+    && apk add -u openssl ca-certificates \
+    && apk add -u dbus fontconfig freetype ttf-dejavu ttf-droid ttf-freefont ttf-liberation font-noto-emoji \
     && dbus-uuidgen > /var/lib/dbus/machine-id && apk del dbus \
     && rm -rf /var/cache/apk/* /tmp/* \
     && wget -O /bin/wait-for https://raw.githubusercontent.com/eficode/wait-for/v2.2.3/wait-for && chmod a+x /bin/wait-for \
     && update-ms-fonts \
     && fc-cache -f \
-    && ln -s /usr/bin/pip3 /usr/bin/pip \
-    && python3 -m ensurepip --upgrade \
-    && pip install -U pip setuptools wheel \
     && addgroup -g 10001 user \
     && adduser -u 10000 -S -s /bin/sh -G user user \
     && echo "user:password" | chpasswd 2>/dev/null \
@@ -64,8 +61,4 @@ RUN mkdir -p /pandoc/filters \
     && wget -O /tmp/pandoc-filters.zip https://github.com/hason/pandoc-filters/archive/master.zip && unzip /tmp/pandoc-filters.zip -d /tmp && cd /tmp/pandoc-filters* && find . -name '*.lua' | cpio -pdm /pandoc/filters && clean \
     && wget -O /pandoc/filters/logging.lua https://raw.githubusercontent.com/wlupton/pandoc-lua-logging/main/logging.lua \
     && chown -R user:user /pandoc \
-    && clean
-
-# WeasyPrint
-RUN pip install weasyprint==60.1 \
     && clean
