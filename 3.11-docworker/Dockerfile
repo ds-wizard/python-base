@@ -17,7 +17,7 @@ ENV PIP_NO_COMPILE=1 \
 RUN chmod +x /bin/clean \
     && mkdir "$PIP_CACHE_DIR" && chmod a+rwx "$PIP_CACHE_DIR" \
     && apk add -u python3 python3-dev py3-wheel py3-setuptools py3-pip libpq-dev libffi-dev openssl-dev gettext \
-    && apk add -u cairo cairo-gobject pango gdk-pixbuf py3-brotli py3-lxml py3-cffi py3-pillow msttcorefonts-installer fontconfig zopfli \
+    && apk add -u cairo cairo-gobject pango gdk-pixbuf py3-lxml py3-pillow msttcorefonts-installer fontconfig zopfli \
     && apk add -u lua lua-dev lua-penlight zip \
     && apk add -u openssl ca-certificates \
     && apk add -u dbus fontconfig freetype ttf-dejavu ttf-droid ttf-freefont ttf-liberation font-noto-emoji \
