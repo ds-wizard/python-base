@@ -14,6 +14,7 @@ jobs:
         tag:
           - 3.11-basic
           - 3.11-docworker
+          - 3.11-docworker-lambda
 
     env:
       PUBLIC_IMAGE_PREFIX: 'datastewardshipwizard'

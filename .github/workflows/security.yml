@@ -23,6 +23,7 @@ jobs:
         tag:
           - 3.11-basic
           - 3.11-docworker
+          - 3.11-docworker-lambda
 
     env:
       IMAGE_BASE_NAME: 'localhost:5000/test/python-base'
