@@ -17,7 +17,7 @@ ENV XDG_DATA_HOME=/ \
 RUN mkdir "$PIP_CACHE_DIR" && chmod a+rwx "$PIP_CACHE_DIR" \
  && dnf install -y \
         python3.11 python3.11-devel python3.11-wheel python3.11-setuptools python3.11-pip \
-        libpq-devel libffi-devel openssl openssl-devel gettext ca-certificates \
+        libpq-devel libffi-devel openssl openssl-devel gettext ca-certificates tzdata \
         pango cairo cairo-gobject gettext gdk-pixbuf2 zopfli \
         xz xz-lzma-compat tar gzip zip unzip lua lua-devel \
         fontconfig freetype  google-droid-fonts-all google-noto-emoji-color-fonts google-noto-emoji-fonts \

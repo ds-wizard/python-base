@@ -22,7 +22,7 @@ RUN chmod +x /bin/clean \
  && mkdir "$PIP_CACHE_DIR" && chmod a+rwx "$PIP_CACHE_DIR" \
  && apk add -u \
             python3 python3-dev py3-wheel py3-setuptools py3-pip \
-            libpq-dev libffi-dev openssl openssl-dev gettext ca-certificates \
+            libpq-dev libffi-dev openssl openssl-dev gettext ca-certificates tzdata \
             pango cairo cairo-gobject gdk-pixbuf dbus zopfli \
             xz tar gzip zip unzip lua lua-dev  \
             fontconfig freetype msttcorefonts-installer font-droid font-noto-emoji \
