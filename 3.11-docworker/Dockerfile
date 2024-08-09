@@ -1,4 +1,4 @@
-FROM alpine:3.20.1
+FROM alpine:3.20.2
 
 ARG TARGETARCH
 
@@ -17,7 +17,7 @@ ENV PIP_NO_COMPILE=1 \
     XDG_DATA_HOME=/ \
     LUA_PATH="/pandoc/filters/?.lua;/usr/share/lua/common/?.lua;;"
 
-# Alpine Packages + Update fonts + Setup user + Cleanup
+# Alpine Packages + Update fonts + Setup user + Pandoc + Cleanup
 RUN chmod +x /bin/clean \
  && mkdir "$PIP_CACHE_DIR" && chmod a+rwx "$PIP_CACHE_DIR" \
  && apk add -u \
@@ -33,12 +33,10 @@ RUN chmod +x /bin/clean \
  && adduser -u 10000 -S -s /bin/sh -G user user \
  && echo "user:password" | chpasswd 2>/dev/null \
  && rm -rf /var/cache/apk/* /tmp/* $PIP_CACHE_DIR/* \
- && clean
-
-# Pandoc
-RUN wget -O /tmp/pandoc.tar.gz "https://github.com/jgm/pandoc/releases/download/3.1.13/pandoc-3.1.13-linux-${TARGETARCH}.tar.gz" \
+ &&  wget -O /tmp/pandoc.tar.gz "https://github.com/jgm/pandoc/releases/download/3.1.13/pandoc-3.1.13-linux-${TARGETARCH}.tar.gz" \
  && tar -xvzf /tmp/pandoc.tar.gz -C /tmp && mv /tmp/pandoc*/bin/pandoc /usr/local/bin/pandoc \
  && rm -rf /tmp/* \
  && mkdir -p /pandoc/templates /pandoc/filters/pandocker \
  && chown -R user:user /pandoc \
+ && apk del msttcorefonts-installer wget \
  && clean
