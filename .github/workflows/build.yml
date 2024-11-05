@@ -12,9 +12,9 @@ jobs:
       fail-fast: false
       matrix:
         tag:
-          - 3.11-basic
-          - 3.11-docworker
-          - 3.11-docworker-lambda
+          - basic
+          - docworker
+          - docworker-lambda
 
     env:
       PUBLIC_IMAGE_PREFIX: 'datastewardshipwizard'
