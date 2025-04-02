@@ -31,7 +31,7 @@ RUN mkdir "$PIP_CACHE_DIR" && chmod a+rwx "$PIP_CACHE_DIR" \
  && rm -rf $PIP_CACHE_DIR/*
 
 # Pandoc
-RUN curl -L -o /tmp/pandoc.tar.gz -O "https://github.com/jgm/pandoc/releases/download/3.1.13/pandoc-3.1.13-linux-${TARGETARCH}.tar.gz" \
+RUN curl -L -o /tmp/pandoc.tar.gz -O "https://github.com/jgm/pandoc/releases/download/3.6.4/pandoc-3.6.4-linux-${TARGETARCH}.tar.gz" \
  && tar xvzf /tmp/pandoc.tar.gz -C /tmp \
  && mv /tmp/pandoc*/bin/pandoc /usr/local/bin/pandoc \
  && rm -rf /tmp/* \

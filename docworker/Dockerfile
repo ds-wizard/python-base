@@ -33,7 +33,7 @@ RUN chmod +x /bin/clean \
  && adduser -u 10000 -S -s /bin/sh -G user user \
  && echo "user:password" | chpasswd 2>/dev/null \
  && rm -rf /var/cache/apk/* /tmp/* $PIP_CACHE_DIR/* \
- &&  wget -O /tmp/pandoc.tar.gz "https://github.com/jgm/pandoc/releases/download/3.1.13/pandoc-3.1.13-linux-${TARGETARCH}.tar.gz" \
+ &&  wget -O /tmp/pandoc.tar.gz "https://github.com/jgm/pandoc/releases/download/3.6.4/pandoc-3.6.4-linux-${TARGETARCH}.tar.gz" \
  && tar -xvzf /tmp/pandoc.tar.gz -C /tmp && mv /tmp/pandoc*/bin/pandoc /usr/local/bin/pandoc \
  && rm -rf /tmp/* \
  && mkdir -p /pandoc/templates /pandoc/filters/pandocker \
