@@ -25,16 +25,16 @@ jobs:
 
     steps:
     - name: Check out repository
-      uses: actions/checkout@v3
+      uses: actions/checkout@v6
       with:
           fetch-depth: 0
 
     - name: Set up QEMU
-      uses: docker/setup-qemu-action@v2
+      uses: docker/setup-qemu-action@v3
 
     - name: Set up Docker Buildx
       id: buildx
-      uses: docker/setup-buildx-action@v2
+      uses: docker/setup-buildx-action@v3
 
     - name: Set short SHA
       id: vars
@@ -43,7 +43,7 @@ jobs:
     # TEST DOCKER IMAGE BUILD
     - name: Docker meta [test]
       id: meta-test
-      uses: docker/metadata-action@v4
+      uses: docker/metadata-action@v5
       with:
         images: |
           ${{ env.PUBLIC_IMAGE_PREFIX }}/${{ env.IMAGE_BASE_NAME }}
@@ -52,7 +52,7 @@ jobs:
           type=raw,value=${{ matrix.tag }}-${{ steps.vars.outputs.sha_short }}
 
     - name: Docker build+push [test]
-      uses: docker/build-push-action@v3
+      uses: docker/build-push-action@v6
       with:
         context: ${{ env.DOCKER_META_CONTEXT }}
         file: ${{ env.DOCKER_META_FILE }}
@@ -66,7 +66,7 @@ jobs:
     # PUBLIC: DOCKER HUB
     - name: Docker login [public]
       if: github.event_name != 'pull_request'
-      uses: docker/login-action@v2
+      uses: docker/login-action@v3
       with:
         username: ${{ secrets.DOCKER_HUB_USERNAME }}
         password: ${{ secrets.DOCKER_HUB_PASSWORD }}
@@ -74,7 +74,7 @@ jobs:
     - name: Docker meta [public]
       id: meta-public
       if: github.event_name != 'pull_request'
-      uses: docker/metadata-action@v4
+      uses: docker/metadata-action@v5
       with:
         images: |
           ${{ env.PUBLIC_IMAGE_PREFIX }}/${{ env.IMAGE_BASE_NAME }}
@@ -86,7 +86,7 @@ jobs:
           type=semver,pattern={{major}},enable=${{ !startsWith(github.ref, 'refs/tags/v0.') }},suffix=-${{ matrix.tag }}
 
     - name: Docker build+push [public]
-      uses: docker/build-push-action@v3
+      uses: docker/build-push-action@v6
       if: github.event_name != 'pull_request' && steps.meta-public.outputs.tags != ''
       with:
         context: ${{ env.DOCKER_META_CONTEXT }}
