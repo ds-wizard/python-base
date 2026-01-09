@@ -1,4 +1,4 @@
-FROM alpine:3.23.2
+FROM python:3.13.11-alpine3.23
 
 ARG TARGETARCH
 
@@ -17,7 +17,6 @@ ENV PIP_NO_COMPILE=1 \
 RUN chmod +x /bin/clean \
  && mkdir "$PIP_CACHE_DIR" && chmod a+rwx "$PIP_CACHE_DIR" \
  && apk add -u \
-            python3 python3-dev py3-wheel py3-setuptools py3-pip \
             libffi-dev libpq-dev openssl-dev openssl ca-certificates tzdata \
  && addgroup -g 10001 user \
  && adduser -u 10000 -S -s /bin/sh -G user user \
