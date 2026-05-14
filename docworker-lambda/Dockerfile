@@ -16,7 +16,7 @@ ENV XDG_DATA_HOME=/ \
 # https://docs.aws.amazon.com/linux/al2023/release-notes/all-packages-AL2023.3.html
 RUN mkdir "$PIP_CACHE_DIR" && chmod a+rwx "$PIP_CACHE_DIR" \
  && dnf install -y \
-        python3.13 python3.13-devel python3.13-wheel python3.13-setuptools python3.13-pip \
+        python3.14 python3.14-devel python3.14-wheel python3.14-setuptools python3.14-pip \
         libpq-devel libffi-devel openssl openssl-devel gettext ca-certificates tzdata \
         pango cairo cairo-gobject gettext gdk-pixbuf2 zopfli \
         xz xz-lzma-compat tar gzip zip unzip lua lua-devel \
@@ -24,8 +24,8 @@ RUN mkdir "$PIP_CACHE_DIR" && chmod a+rwx "$PIP_CACHE_DIR" \
         cabextract xorg-x11-font-utils \
  && rpm -i https://downloads.sourceforge.net/project/mscorefonts2/rpms/msttcore-fonts-installer-2.6-1.noarch.rpm \
  && fc-cache -f  \
- && ln -s /usr/bin/python3.13 /usr/bin/python \
- && ln -s /usr/bin/pip3.13 /usr/bin/pip \
+ && ln -s /usr/bin/python3.14 /usr/bin/python \
+ && ln -s /usr/bin/pip3.14 /usr/bin/pip \
  && pip install awslambdaric boto3 s3transfer \
  && dnf clean all \
  && rm -rf $PIP_CACHE_DIR/*
