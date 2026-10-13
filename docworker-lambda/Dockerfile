@@ -29,7 +29,8 @@ RUN mkdir "$PIP_CACHE_DIR" && chmod a+rwx "$PIP_CACHE_DIR" \
  && ln -s /usr/bin/pip3.14 /usr/bin/pip \
  && pip install awslambdaric boto3 s3transfer \
  && dnf clean all \
- && rm -rf $PIP_CACHE_DIR/*
+ && rm -rf $PIP_CACHE_DIR/* \
+ && rm -f /usr/local/bin/aws-lambda-rie
 
 # Pandoc
 RUN curl -L -o /tmp/pandoc.tar.gz -O "https://github.com/jgm/pandoc/releases/download/3.10.2/pandoc-3.10.2-linux-${TARGETARCH}.tar.gz" \
