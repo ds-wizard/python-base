@@ -15,6 +15,7 @@ ENV XDG_DATA_HOME=/ \
 # RPM Packages + Update fonts + Setup user + Cleanup
 # https://docs.aws.amazon.com/linux/al2023/release-notes/all-packages-AL2023.3.html
 RUN mkdir "$PIP_CACHE_DIR" && chmod a+rwx "$PIP_CACHE_DIR" \
+ && dnf upgrade -y \
  && dnf install -y \
         python3.14 python3.14-devel python3.14-wheel python3.14-setuptools python3.14-pip \
         libpq-devel libffi-devel openssl openssl-devel gettext ca-certificates tzdata \
