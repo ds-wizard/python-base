@@ -1,4 +1,4 @@
-FROM python:3.14.9-alpine3.24
+FROM python:3.14.10-alpine3.24
 
 ARG TARGETARCH
 
