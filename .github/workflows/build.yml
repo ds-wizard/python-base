@@ -67,6 +67,20 @@ jobs:
         cache-from: type=gha
         cache-to: type=gha,mode=max
 
+    # SMOKE TEST (amd64 only, loaded into local Docker)
+    - name: Docker build [smoke test]
+      uses: docker/build-push-action@v7
+      with:
+        context: ${{ env.DOCKER_META_CONTEXT }}
+        file: ${{ env.DOCKER_META_FILE }}
+        platforms: linux/amd64
+        load: true
+        tags: python-base-test:${{ matrix.tag }}
+        cache-from: type=gha
+
+    - name: Smoke test
+      run: ./tests/run.sh ${{ matrix.tag }} python-base-test:${{ matrix.tag }}
+
     # PUBLIC: GITHUB CONTAINER REGISTRY
     - name: Docker login [public]
       if: github.event_name != 'pull_request'
