@@ -20,6 +20,6 @@ RUN chmod +x /bin/clean \
             libffi-dev libpq-dev openssl-dev openssl ca-certificates tzdata \
  && addgroup -g 10001 user \
  && adduser -u 10000 -S -s /bin/sh -G user user \
- && echo "user:password" | chpasswd 2>/dev/null \
- && mkdir $PIP_CACHE_DIR/* \
+ && echo 'user:*' | chpasswd -e \
+ && rm -rf $PIP_CACHE_DIR/* \
  && clean

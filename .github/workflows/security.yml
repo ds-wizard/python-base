@@ -89,7 +89,7 @@ jobs:
             cat result.txt | grep "Critical"
             exit 1
           else
-            echo "There are no citical vulnerabilities for image: $IMAGE"
+            echo "There are no critical vulnerabilities for image: $IMAGE"
             echo "Sending notification..."
             echo "Well done!"
           fi

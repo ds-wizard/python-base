@@ -2,7 +2,7 @@ FROM public.ecr.aws/lambda/provided:al2023
 
 ARG TARGETARCH
 
-# Enviroment variables (Pandoc, PIP, OpenSSL)
+# Environment variables (Pandoc, PIP, OpenSSL)
 ENV XDG_DATA_HOME=/ \
     LUA_PATH="/pandoc/filters/?.lua;/usr/share/lua/common/?.lua;;" \
     PIP_NO_COMPILE=1 \
@@ -19,7 +19,7 @@ RUN mkdir "$PIP_CACHE_DIR" && chmod a+rwx "$PIP_CACHE_DIR" \
  && dnf install -y \
         python3.14 python3.14-devel python3.14-wheel python3.14-setuptools python3.14-pip \
         libpq-devel libffi-devel openssl openssl-devel gettext ca-certificates tzdata \
-        pango cairo cairo-gobject gettext gdk-pixbuf2 zopfli \
+        pango cairo cairo-gobject gdk-pixbuf2 zopfli \
         xz xz-lzma-compat tar gzip zip unzip lua lua-devel \
         fontconfig freetype  google-droid-fonts-all google-noto-emoji-color-fonts google-noto-emoji-fonts \
         cabextract xorg-x11-font-utils \

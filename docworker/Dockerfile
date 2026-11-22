@@ -4,7 +4,7 @@ ARG TARGETARCH
 
 COPY ./scripts/alpine/clean /bin/clean
 
-# Enviroment variables (Pandoc, PIP, OpenSSL)
+# Environment variables (Pandoc, PIP, OpenSSL)
 ENV PIP_NO_COMPILE=1 \
     PIP_DISABLE_PIP_VERSION_CHECK=1 \
     PIP_CACHE_DIR=/pip-cache \
@@ -30,7 +30,7 @@ RUN chmod +x /bin/clean \
  && fc-cache -f \
  && addgroup -g 10001 user \
  && adduser -u 10000 -S -s /bin/sh -G user user \
- && echo "user:password" | chpasswd 2>/dev/null \
+ && echo 'user:*' | chpasswd -e \
  && rm -rf /var/cache/apk/* /tmp/* $PIP_CACHE_DIR/* \
  &&  wget -O /tmp/pandoc.tar.gz "https://github.com/jgm/pandoc/releases/download/3.10.2/pandoc-3.10.2-linux-${TARGETARCH}.tar.gz" \
  && tar -xvzf /tmp/pandoc.tar.gz -C /tmp && mv /tmp/pandoc*/bin/pandoc /usr/local/bin/pandoc \
